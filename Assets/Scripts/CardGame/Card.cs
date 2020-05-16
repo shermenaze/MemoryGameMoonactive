@@ -12,6 +12,7 @@ namespace CardGame
         [SerializeField] private Sprite _backSprite;
         [SerializeField] private SpriteRenderer _cardSpriteRenderer;
         [SerializeField] private SpriteRenderer _frameSpriteRenderer;
+        [SerializeField] private AudioClip _cardFlipAudio;
 
         private CardsGameManager _cardsGameManager;
         private CardSO _cardData;
@@ -59,32 +60,20 @@ namespace CardGame
         {
             Enabled = false;
 
-            //AudioManager.Instance.PlaySound(isHidden ? _buttonFlipOpenClip : _buttonFlipCloseClip, 0.3f);
+            AudioManager.Instance.PlaySound(_cardFlipAudio, 0.3f);
 
             var endRotation = new Vector3(0, 180, 0);
 
             transform.DORotate(endRotation, 0.4f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuint)
                 .SetDelay(delay)
                 .OnUpdate(SwitchCardSprite)
-                .OnComplete(() =>
-                {
-                    Enabled = enabledWhenDone;
-                    Debug.Log(_collider.enabled);
-                });
+                .OnComplete(() => Enabled = enabledWhenDone);
         }
 
         private void SwitchCardSprite()
         {
+            if (transform.localRotation.y < 0.4f || transform.localRotation.y > 0.9f) return;
             _cardSpriteRenderer.sprite = transform.localRotation.y > 0.7f ? _cardSprite : _backSprite;
         }
-
-        // private IEnumerator InitialRotation(float waitForAnimIn)
-        // {
-        //     yield return new WaitForSeconds(waitForAnimIn);
-        //     _animate.AnimIn();
-        //
-        //     yield return new WaitForSeconds(4);
-        //     RotateCardDo(true);
-        // }
     }
 }

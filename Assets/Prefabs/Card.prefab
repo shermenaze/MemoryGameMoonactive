@@ -51,6 +51,7 @@ MonoBehaviour:
   _backSprite: {fileID: 21300000, guid: 4af61e6c01c944a218913245f50dd060, type: 3}
   _cardSpriteRenderer: {fileID: 37816886083547741}
   _frameSpriteRenderer: {fileID: 6826695672616613865}
+  _cardFlipAudio: {fileID: 8300000, guid: 28a54de2712a250488e4463c65fb0329, type: 3}
 --- !u!61 &651885670
 BoxCollider2D:
   m_ObjectHideFlags: 0

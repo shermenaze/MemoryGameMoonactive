@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace CardGame
 {
@@ -8,6 +8,7 @@ namespace CardGame
     {
         #region Fields
 
+        [SerializeField] private GameEvent _gameStartEvent;
         [SerializeField] private Transform _instantiatePosition;
         [SerializeField] private Transform _deckPosition;
         [SerializeField] private Card _cardPrefab;
@@ -49,7 +50,7 @@ namespace CardGame
 
             Vector3 newPosition = Vector3.zero;
             newPosition.x = negativeCameraAspect + xOffset * 0.5f;
-            newPosition.y = negativeCameraAspect + yOffset * 0.5f - _camera.aspect * 3.5f; //TODO: Not like this
+            newPosition.y = negativeCameraAspect + yOffset * 0.5f - _camera.aspect * 3f; //TODO: Not like this
 
             for (int j = 0; j < Columns; j++)
             {
@@ -85,23 +86,45 @@ namespace CardGame
                 card.Animate(_deckPosition.position, animationDelay);
                 animationDelay += _initialDelay;
             }
+
+            StartCoroutine(StartGame());
         }
 
-        [ContextMenu("MoveCardsToPosition")]
+        private IEnumerator StartGame()
+        {
+            yield return new WaitForSeconds(3);
+
+            MoveCardsToPosition();
+        }
+
         private void MoveCardsToPosition()
         {
             float animationDelay = 0;
+
             for (int cardIndex = 0; cardIndex < _cardsList.Count; cardIndex++)
             {
                 animationDelay += _moveCardToPositionDelay;
                 _cardsList[cardIndex].Animate(_cardsPositions[cardIndex], animationDelay);
             }
+
+            StartCoroutine(ShowAllCards());
+        }
+
+        private IEnumerator ShowAllCards()
+        {
+            float duration = 0;
+            
+            _cardsList.ForEach(card => card.RotateCard(false, duration += 0.1f));
+            yield return new WaitForSeconds(5f);
+            _cardsList.ForEach(card => card.RotateCard(true));
+            
+            _gameStartEvent.Raise();
         }
 
         public void CheckMatch(Card card)
         {
             card.RotateCard(false);
-            
+
             if (_currentCard == null) _currentCard = card;
             else if (_currentCard.CardNumber == card.CardNumber)
             {

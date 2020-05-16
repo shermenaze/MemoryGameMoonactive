@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(Readme))]
 [InitializeOnLoad]
@@ -47,15 +47,13 @@ public class ReadmeEditor : Editor {
 		{
 			var readmeObject = AssetDatabase.LoadMainAssetAtPath(AssetDatabase.GUIDToAssetPath(ids[0]));
 			
-			Selection.objects = new UnityEngine.Object[]{readmeObject};
+			Selection.objects = new[]{readmeObject};
 			
 			return (Readme)readmeObject;
 		}
-		else
-		{
-			Debug.Log("Couldn't find a readme");
-			return null;
-		}
+
+		Debug.Log("Couldn't find a readme");
+		return null;
 	}
 	
 	protected override void OnHeaderGUI()
