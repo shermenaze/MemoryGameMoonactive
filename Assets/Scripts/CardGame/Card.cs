@@ -1,76 +1,90 @@
-﻿using System;
-using System.Collections;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 
 namespace CardGame
 {
+    [RequireComponent(typeof(Collider2D))]
     public class Card : MonoBehaviour, IClickable
     {
         #region Fields
 
-        [SerializeField][Range(0.5f, 5)] private float _speed = 3f;
+        [SerializeField] [Range(0.5f, 5)] private float _speed = 3f;
         [SerializeField] private Sprite _backSprite;
-        [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private SpriteRenderer _cardSpriteRenderer;
+        [SerializeField] private SpriteRenderer _frameSpriteRenderer;
 
-        private CardsManager _cardsManager;
+        private CardsGameManager _cardsGameManager;
         private CardSO _cardData;
         private int _cardNumber;
         private Sprite _cardSprite;
-        private Quaternion _backRotation;
-        private Quaternion _frontRotation;
+        private Collider2D _collider;
 
-        private const float _flipCondition = -0.7f;
-        private const float RotateToFrontCondition = 0f;
-        private const float RotateToBackCondition = -1f;
+        #endregion
+
+        #region Properties
+
+        private bool Enabled { set => _collider.enabled = value; }
+        public int CardNumber => _cardNumber;
 
         #endregion
 
         private void Awake()
         {
-            _backRotation = Quaternion.Euler(0, 0, 0);
-            _frontRotation = Quaternion.Euler(0, 180, 0);
+            _collider = GetComponent<Collider2D>();
         }
 
-        public void Init(CardsManager cardsManager, CardSO cardData, int cardNumber)
+        public void Init(CardsGameManager cardsGameManager, CardSO cardData, int cardNumber, int sortingOrder)
         {
-            _cardsManager = cardsManager;
+            _cardsGameManager = cardsGameManager;
             _cardData = cardData; //TODO: Remove cach, just take sprite
 
             name = _cardData.name;
             _cardNumber = cardNumber;
             _cardSprite = _cardData.CardSprite;
+            _cardSpriteRenderer.sortingOrder += sortingOrder;
+            _frameSpriteRenderer.sortingOrder += sortingOrder;
         }
 
-        public void Animate(Vector3 position)
+        public void Animate(Vector3 position, float animationDelay)
         {
-            transform.DOMove(position, 1);
+            transform.DOMove(position, 1).SetDelay(animationDelay);
         }
-        
+
         public void Clicked()
         {
-            StopAllCoroutines();
-
-            var rotationCondition = transform.rotation.y > _flipCondition;
-            StartCoroutine(RotateCard(rotationCondition));
+            _cardsGameManager.CheckMatch(this);
         }
 
-        private IEnumerator RotateCard(bool rotateToFront)
+        public void RotateCard(bool enabledWhenDone, float delay = 0)
         {
-            var newRotation = rotateToFront ? RotateToBackCondition : RotateToFrontCondition;
-            var rotation = transform.rotation;
+            Enabled = false;
 
-            while (Math.Abs(rotation.y - newRotation) > float.Epsilon)
-            {
-                rotation = rotateToFront
-                    ? Quaternion.Slerp(rotation, _frontRotation, Time.deltaTime * _speed)
-                    : Quaternion.Slerp(rotation, _backRotation, Time.deltaTime * _speed);
+            //AudioManager.Instance.PlaySound(isHidden ? _buttonFlipOpenClip : _buttonFlipCloseClip, 0.3f);
 
-                transform.rotation = rotation;
+            var endRotation = new Vector3(0, 180, 0);
 
-                _spriteRenderer.sprite = rotation.y <= _flipCondition ? _cardSprite : _backSprite;
-                yield return null;
-            }
+            transform.DORotate(endRotation, 0.4f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuint)
+                .SetDelay(delay)
+                .OnUpdate(SwitchCardSprite)
+                .OnComplete(() =>
+                {
+                    Enabled = enabledWhenDone;
+                    Debug.Log(_collider.enabled);
+                });
         }
+
+        private void SwitchCardSprite()
+        {
+            _cardSpriteRenderer.sprite = transform.localRotation.y > 0.7f ? _cardSprite : _backSprite;
+        }
+
+        // private IEnumerator InitialRotation(float waitForAnimIn)
+        // {
+        //     yield return new WaitForSeconds(waitForAnimIn);
+        //     _animate.AnimIn();
+        //
+        //     yield return new WaitForSeconds(4);
+        //     RotateCardDo(true);
+        // }
     }
 }
