@@ -7,8 +7,7 @@ namespace CardGame
     public class Card : MonoBehaviour, IClickable
     {
         #region Fields
-
-        [SerializeField] [Range(0.5f, 5)] private float _speed = 3f;
+        
         [SerializeField] private Sprite _backSprite;
         [SerializeField] private SpriteRenderer _cardSpriteRenderer;
         [SerializeField] private SpriteRenderer _frameSpriteRenderer;
@@ -37,11 +36,13 @@ namespace CardGame
         public void Init(CardsGameManager cardsGameManager, CardSO cardData, int cardNumber, int sortingOrder)
         {
             _cardsGameManager = cardsGameManager;
-            _cardData = cardData; //TODO: Remove cach, just take sprite
-
+            
+            _cardData = cardData;
             name = _cardData.name;
+
             _cardNumber = cardNumber;
             _cardSprite = _cardData.CardSprite;
+            
             _cardSpriteRenderer.sortingOrder += sortingOrder;
             _frameSpriteRenderer.sortingOrder += sortingOrder;
         }

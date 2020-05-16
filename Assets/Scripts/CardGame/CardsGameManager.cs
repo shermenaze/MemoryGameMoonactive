@@ -8,38 +8,47 @@ namespace CardGame
     {
         #region Fields
 
-        [SerializeField] private GameEvent _gameStartEvent;
-        [SerializeField] private Transform _instantiatePosition;
-        [SerializeField] private Transform _deckPosition;
+        [SerializeField] private Camera _camera;
+        [SerializeField] private BoardSo _boardData;
+        
+        [Header("Cards")]
         [SerializeField] private Card _cardPrefab;
         [SerializeField] private CardSO[] _cardsSo;
-        [SerializeField] private Camera _camera;
+        
+        [Header("Animations")]
+        [SerializeField] private Transform _instantiatePosition;
+        [SerializeField] private Transform _deckPosition;
         [SerializeField] [Range(0, 0.2f)] private float _initialDelay;
         [SerializeField] [Range(0, 0.5f)] private float _moveCardToPositionDelay;
-
-        [SerializeField] private BoardSo _boardData; //TODO: Add functionality or delete
+        
+        [Header("GameEvents")]
+        [SerializeField] private GameEvent _gameStartEvent;
 
         private readonly List<Card> _cardsList = new List<Card>();
         private Vector3[] _cardsPositions;
-        private float _cardsScale;
         private Card _currentCard;
+        private float _cardsScale;
         private int _matches;
 
-        private const int Rows = 4;
-        private const int Columns = 4;
-        private const int CardsAmount = Rows * Columns;
+        private int _cardsAmount;
+        private int _columns;
+        private int _rows;
 
         #endregion
 
         private void Start()
         {
+            _columns = _boardData.Columns;
+            _rows = _boardData.Rows;
+            _cardsAmount = _columns * _rows;
+            
             InitCardsPositions();
             InitCards();
         }
 
         private void InitCardsPositions()
         {
-            var positions = new Vector3[CardsAmount];
+            var positions = new Vector3[_cardsAmount];
             int vectorsEntered = 0;
 
             var negativeCameraAspect = _camera.aspect * _camera.orthographicSize * -1f;
@@ -50,13 +59,13 @@ namespace CardGame
 
             Vector3 newPosition = Vector3.zero;
             newPosition.x = negativeCameraAspect + xOffset * 0.5f;
-            newPosition.y = negativeCameraAspect + yOffset * 0.5f - _camera.aspect * 3f; //TODO: Not like this
+            newPosition.y = negativeCameraAspect + yOffset * 0.5f - _camera.aspect * (_columns - 2);
 
-            for (int j = 0; j < Columns; j++)
+            for (int j = 0; j < _columns; j++)
             {
                 if (j != 0) newPosition.y += yOffset;
 
-                for (int i = 0; i < Rows; i++)
+                for (int i = 0; i < _rows; i++)
                 {
                     if (i != 0) newPosition.x += xOffset;
                     positions[vectorsEntered++] = newPosition;
@@ -74,7 +83,7 @@ namespace CardGame
             float animationDelay = 0;
             int orderInLayer = 0;
 
-            for (int cardIndex = 0; cardIndex < CardsAmount; cardIndex++)
+            for (int cardIndex = 0; cardIndex < _cardsAmount; cardIndex++)
             {
                 var card = Instantiate(_cardPrefab, _instantiatePosition);
                 card.transform.localScale *= _cardsScale;
@@ -90,13 +99,6 @@ namespace CardGame
             StartCoroutine(StartGame());
         }
 
-        private IEnumerator StartGame()
-        {
-            yield return new WaitForSeconds(3);
-
-            MoveCardsToPosition();
-        }
-
         private void MoveCardsToPosition()
         {
             float animationDelay = 0;
@@ -108,6 +110,12 @@ namespace CardGame
             }
 
             StartCoroutine(ShowAllCards());
+        }
+
+        private IEnumerator StartGame()
+        {
+            yield return new WaitForSeconds(3);
+            MoveCardsToPosition();
         }
 
         private IEnumerator ShowAllCards()

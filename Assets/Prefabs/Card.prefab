@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1581187635336015576}
-  - component: {fileID: 2081547044}
   - component: {fileID: 651885670}
+  - component: {fileID: 2081547044}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -35,23 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2081547044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1581187635336015582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b50d2cc5ee0eb7f4386f0550e34f32e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 3
-  _backSprite: {fileID: 21300000, guid: 4af61e6c01c944a218913245f50dd060, type: 3}
-  _cardSpriteRenderer: {fileID: 37816886083547741}
-  _frameSpriteRenderer: {fileID: 6826695672616613865}
-  _cardFlipAudio: {fileID: 8300000, guid: 28a54de2712a250488e4463c65fb0329, type: 3}
 --- !u!61 &651885670
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -78,6 +61,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.21, y: 1.68}
   m_EdgeRadius: 0
+--- !u!114 &2081547044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581187635336015582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b50d2cc5ee0eb7f4386f0550e34f32e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 3
+  _backSprite: {fileID: 21300000, guid: 4af61e6c01c944a218913245f50dd060, type: 3}
+  _cardSpriteRenderer: {fileID: 37816886083547741}
+  _frameSpriteRenderer: {fileID: 6826695672616613865}
+  _cardFlipAudio: {fileID: 8300000, guid: 28a54de2712a250488e4463c65fb0329, type: 3}
 --- !u!1 &1836200999264224858
 GameObject:
   m_ObjectHideFlags: 0
