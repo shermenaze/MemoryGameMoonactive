@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 namespace CardGame
@@ -39,6 +40,11 @@ namespace CardGame
             name = _cardData.name;
             _cardNumber = cardNumber;
             _cardSprite = _cardData.CardSprite;
+        }
+
+        public void Animate(Vector3 position)
+        {
+            transform.DOMove(position, 1);
         }
         
         public void Clicked()
