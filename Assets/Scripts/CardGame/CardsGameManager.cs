@@ -10,19 +10,19 @@ namespace CardGame
 
         [SerializeField] private Camera _camera;
         [SerializeField] private BoardSo _boardData;
-        
-        [Header("Cards")]
-        [SerializeField] private Card _cardPrefab;
+
+        [Header("Cards")] [SerializeField] private Card _cardPrefab;
         [SerializeField] private CardSO[] _cardsSo;
-        
-        [Header("Animations")]
-        [SerializeField] private Transform _instantiatePosition;
+
+        [Header("Animations")] [SerializeField]
+        private Transform _instantiatePosition;
+
         [SerializeField] private Transform _deckPosition;
         [SerializeField] [Range(0, 0.2f)] private float _initialDelay;
         [SerializeField] [Range(0, 0.5f)] private float _moveCardToPositionDelay;
-        
-        [Header("GameEvents")]
-        [SerializeField] private GameEvent _gameStartEvent;
+
+        [Header("GameEvents")] [SerializeField]
+        private GameEvent _gameStartEvent;
 
         private readonly List<Card> _cardsList = new List<Card>();
         private Vector3[] _cardsPositions;
@@ -41,7 +41,7 @@ namespace CardGame
             _columns = _boardData.Columns;
             _rows = _boardData.Rows;
             _cardsAmount = _columns * _rows;
-            
+
             InitCardsPositions();
             InitCards();
         }
@@ -121,11 +121,11 @@ namespace CardGame
         private IEnumerator ShowAllCards()
         {
             float duration = 0;
-            
+
             _cardsList.ForEach(card => card.RotateCard(false, duration += 0.1f));
             yield return new WaitForSeconds(5f);
             _cardsList.ForEach(card => card.RotateCard(true));
-            
+
             _gameStartEvent.Raise();
         }
 
