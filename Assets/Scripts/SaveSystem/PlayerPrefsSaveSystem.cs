@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CardGame.SaveSystem
 {
-    [CreateAssetMenu(menuName = "SaveSystems", fileName = "PlayerPrefSaveSystem")]
+    [CreateAssetMenu(menuName = "SaveSystems/PlayerPrefSaveSystem", fileName = "PlayerPrefSaveSystem")]
     public class PlayerPrefsSaveSystem : BaseSaveSystem
     {
         #region String Consts
@@ -41,6 +41,8 @@ namespace CardGame.SaveSystem
 
         private void SetPlayerName(string playerName) => SetPref(PLAYER_NAME_PREF, playerName);
         
+        private void SetScore(int value) => SetPref(SCORE_PREF, value);
+        
         #endregion
         
         public override void Save(GameState gameState) 
@@ -49,6 +51,7 @@ namespace CardGame.SaveSystem
             SetMusicVolume(gameState.MusicVolume);
             SetPlayerName(gameState.PlayerName);
             SetMute(gameState.Mute);
+            SetScore(gameState.Score);
         }
 
         public override GameState Load()
@@ -63,5 +66,7 @@ namespace CardGame.SaveSystem
 
             return gameState;
         }
+
+        public override void DeleteAll() { Debug.Log("Delete all!"); }
     }
 }

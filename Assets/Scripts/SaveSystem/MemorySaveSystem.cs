@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CardGame.SaveSystem
 {
-    [CreateAssetMenu(menuName = "SaveSystems", fileName = "MemorySaveSystem")]
+    [CreateAssetMenu(menuName = "SaveSystems/MemorySaveSystem", fileName = "MemorySaveSystem")]
     public class MemorySaveSystem : BaseSaveSystem
     {
         public override void Save(GameState gameState)
@@ -15,5 +15,7 @@ namespace CardGame.SaveSystem
             Debug.Log("Loaded from memory save system");
             return new GameState();
         }
+
+        public override void DeleteAll() { Debug.Log("Delete all"); }
     }
 }

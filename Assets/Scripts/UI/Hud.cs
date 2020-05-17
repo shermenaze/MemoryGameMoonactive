@@ -11,6 +11,8 @@ namespace CardGame.UI
         [SerializeField] private TextMeshProUGUI _gameEndText;
         [SerializeField] private GameEvent _gameLostEvent;
 
+        public float Counter => _counter;
+        
         private float _counter = 30;
         private bool _isGameOn;
 

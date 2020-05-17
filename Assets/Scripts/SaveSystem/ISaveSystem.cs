@@ -4,5 +4,6 @@ namespace CardGame.SaveSystem
     {
         void Save(GameState gameState);
         GameState Load();
+        void DeleteAll();
     }
 }
