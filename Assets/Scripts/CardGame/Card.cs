@@ -61,7 +61,8 @@ namespace CardGame
         {
             Enabled = false;
 
-            AudioManager.Instance.PlaySound(_cardFlipAudio, 0.3f);
+            if(AudioManager.Instance.isActiveAndEnabled)
+                AudioManager.Instance.PlaySound(_cardFlipAudio, 0.3f);
 
             var endRotation = new Vector3(0, 180, 0);
 

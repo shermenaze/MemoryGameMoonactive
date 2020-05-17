@@ -1,25 +1,26 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class GameEventListener : MonoBehaviour
+namespace CardGame
 {
-    public GameEvent GameEvent => _gameEvent;
-    
-    [SerializeField] private GameEvent _gameEvent;
-    [SerializeField] private UnityEvent _eventResponse;
+    /// <summary>The basic game event listener.
+    ///		Holds the basic empty game event.
+    /// </summary>
+    public class GameEventListener : GameEventListenerBase
+    {
+        /// <summary>The actual game event.</summary>
+        [SerializeField] private GameEvent _gameEvent;
 
-    private void OnEnable()
-    {
-        if (_gameEvent != null) _gameEvent.RegisterListener(this);
-    }
+        // ReSharper disable once ConvertToAutoProperty
+        protected override GameEvent GameEvent => _gameEvent;
 
-    private void OnDisable()
-    {
-        if (_gameEvent != null) _gameEvent.UnregisterListener(this);
-    }
-    
-    public void OnEventRaised()
-    {
-        if(enabled) _eventResponse.Invoke();
+        /// <summary>The event response event is unique to every listener.</summary>
+        [SerializeField] private UnityEvent _eventResponse;
+
+        /// <summary>Overriding for the basic listener is just a simple event.</summary>
+        protected override void OnEventRaised()
+        {
+            _eventResponse.Invoke();
+        }
     }
 }

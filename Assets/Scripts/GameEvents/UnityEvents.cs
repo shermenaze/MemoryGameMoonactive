@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
+//TODO: Remove unnecessary items
 [Serializable] public class BoolEvent : UnityEvent<bool> { }
 [Serializable] public class StringEvent : UnityEvent<string> { }
 [Serializable] public class IntEvent : UnityEvent<int> { }

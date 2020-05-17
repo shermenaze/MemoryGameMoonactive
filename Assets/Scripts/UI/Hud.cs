@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -40,7 +41,7 @@ namespace CardGame.UI
             _counterText.text = _counter.ToString("F0");
         }
 
-        public void StartGame()
+        public void StartCounter()
         {
             _counterText.transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutElastic);
             _isGameOn = true;
