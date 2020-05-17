@@ -1,5 +1,4 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -11,8 +10,12 @@ namespace CardGame.UI
         [SerializeField] private TextMeshProUGUI _gameEndText;
         [SerializeField] private GameEvent _gameLostEvent;
 
-        public float Counter => _counter;
-        
+        public float Counter
+        {
+            get => _counter;
+            set => _counter = value;
+        }
+
         private float _counter = 30;
         private bool _isGameOn;
 

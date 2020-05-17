@@ -27,8 +27,6 @@ namespace CardGame.SaveSystem
 
         public void Save()
         {
-            Debug.Log("Saved!");
-            
             var gameState = new GameState
             {
                 MusicVolume = _musicVolumeSlider.value,
@@ -45,9 +43,12 @@ namespace CardGame.SaveSystem
         public void Load()
         {
             var gameState = _saveSystem.Load();
-            Debug.Log(_hud.Counter);
-            
-            Debug.Log($"{gameState.PlayerName} - {gameState.TimeRemaining} - {gameState.MusicVolume}");
+
+            _musicAudioSource.volume = gameState.MusicVolume;
+            _musicVolumeSlider.value = gameState.MusicVolume;
+            _muteToggle.isOn = gameState.Mute;
+            _nameInput.text = gameState.PlayerName;
+            _hud.Counter = gameState.TimeRemaining;
         }
 
         private enum PickSaveSystem{ PlayerPrefSaveSystem, MemorySaveSystem }
