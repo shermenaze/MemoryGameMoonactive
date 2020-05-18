@@ -31,12 +31,11 @@ namespace CardGame
         private void Awake()
         {
             _collider = GetComponent<Collider2D>();
+            _cardsGameManager = GetComponentInParent<CardsGameManager>();
         }
 
-        public void Init(CardsGameManager cardsGameManager, CardSO cardData, int cardNumber, int sortingOrder)
+        public void Init(CardSO cardData, int cardNumber, int sortingOrder)
         {
-            _cardsGameManager = cardsGameManager;
-            
             _cardData = cardData;
             name = _cardData.name;
 
