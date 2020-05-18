@@ -43,7 +43,7 @@ namespace CardGame.UI
             else if (_counter <= 15) _counterText.color = Color.yellow;
 
             _counter -= Time.deltaTime;
-            _counterText.text = _counter.ToString("F0");
+            _counterText.text = _counter.ToString("F1");
         }
 
         public void StartCounter()

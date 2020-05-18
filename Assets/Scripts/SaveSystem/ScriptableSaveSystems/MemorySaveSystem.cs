@@ -5,17 +5,12 @@ namespace CardGame.SaveSystem
     [CreateAssetMenu(menuName = "SaveSystems/MemorySaveSystem ", fileName = "MemorySaveSystem")]
     public class MemorySaveSystem : BaseSaveSystem
     {
-        public override void Save(GameState gameState)
-        {
-            Debug.Log("Saved from memory save system");
-        }
+        private GameState _gameState;
+        
+        public override void Save(GameState gameState) => _gameState = gameState;
 
-        public override GameState Load()
-        {
-            Debug.Log("Loaded from memory save system");
-            return new GameState();
-        }
+        public override GameState Load() => _gameState;
 
-        public override void DeleteAll() { Debug.Log("Delete all"); }
+        public override void DeleteAll() => _gameState = null;
     }
 }

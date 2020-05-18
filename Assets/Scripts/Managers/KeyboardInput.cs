@@ -6,7 +6,10 @@ namespace CardGame
     {
         private readonly GameEventBool _gamePauseEvent;
 
-        public KeyboardInput(GameEventBool gamePauseEvent) { _gamePauseEvent = gamePauseEvent; }
+        public KeyboardInput(GameEventBool gamePauseEvent)
+        {
+            _gamePauseEvent = gamePauseEvent;
+        }
         
         public void CheckInput(Camera camera)
         {

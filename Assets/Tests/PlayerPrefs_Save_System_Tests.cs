@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Tests
 {
-    public class PlayerPrefs_Save_System
+    public class PlayerPrefs_Save_System_Tests
     {
         private PlayerPrefsSaveSystem _system;
         private GameState _gameState;

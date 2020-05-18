@@ -1,12 +1,12 @@
-﻿using CardGame.SaveSystem;
+using CardGame.SaveSystem;
 using NUnit.Framework;
 using UnityEngine;
 
 namespace Tests
 {
-    public class PlayerPrefs_Load_System
+    public class Memory_Load_System_Tests
     {
-        private PlayerPrefsSaveSystem _system;
+        private MemorySaveSystem _system;
         private GameState _gameState;
         
         [SetUp]
@@ -19,15 +19,15 @@ namespace Tests
                 Score = 20,
                 TimeRemaining = 2f
             };
-            _system = ScriptableObject.CreateInstance<PlayerPrefsSaveSystem>();
+            
+            _system = ScriptableObject.CreateInstance<MemorySaveSystem>();
             
             _system.Save(gameState);
             _gameState = _system.Load();
         }
-
+        
         #region Values Tests
-
-                
+        
         [Test]
         public void Load_Returns_GameState_Object() 
         {
@@ -84,7 +84,7 @@ namespace Tests
         }
 
         #endregion
-
+        
         #region Load Tests
 
         [Test]
