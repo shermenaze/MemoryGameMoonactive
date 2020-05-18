@@ -13,11 +13,13 @@ namespace CardGame
         [SerializeField] private SpriteRenderer _frameSpriteRenderer;
         [SerializeField] private AudioClip _cardFlipAudio;
 
-        private CardsGameManager _cardsGameManager;
+        private MemoryGameManager _memoryGameManager;
         private CardSO _cardData;
         private int _cardNumber;
+        private bool _isFaceUp = false;
         private Sprite _cardSprite;
         private Collider2D _collider;
+        private Vector3 _endRotation;
 
         #endregion
 
@@ -25,13 +27,15 @@ namespace CardGame
 
         private bool Enabled { set => _collider.enabled = value; }
         public int CardNumber => _cardNumber;
+        public bool FaceUp => _isFaceUp;
 
         #endregion
 
         private void Awake()
         {
+            _endRotation = new Vector3(0, 180, 0);
             _collider = GetComponent<Collider2D>();
-            _cardsGameManager = GetComponentInParent<CardsGameManager>();
+            _memoryGameManager = GetComponentInParent<MemoryGameManager>();
         }
 
         public void Init(CardSO cardData, int cardNumber, int sortingOrder)
@@ -53,7 +57,7 @@ namespace CardGame
 
         public void Click()
         {
-            _cardsGameManager.CheckMatch(this);
+            _memoryGameManager.CheckMatch(this);
         }
 
         public void RotateCard(bool enabledWhenDone, float delay = 0)
@@ -63,14 +67,23 @@ namespace CardGame
             if(AudioManager.Instance.isActiveAndEnabled)
                 AudioManager.Instance.PlaySound(_cardFlipAudio, 0.3f);
 
-            var endRotation = new Vector3(0, 180, 0);
-
-            transform.DORotate(endRotation, 0.4f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuint)
+            transform.DORotate(_endRotation, 0.4f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuint)
+                .SetUpdate(true)
                 .SetDelay(delay)
                 .OnUpdate(SwitchCardSprite)
-                .OnComplete(() => Enabled = enabledWhenDone);
+                .OnComplete(() =>
+                {
+                    _isFaceUp = !_isFaceUp;
+                    Enabled = enabledWhenDone;
+                });
         }
-
+        
+        public void ResetCard()
+        {
+            if (_isFaceUp) RotateCard(false, 0);
+            Enabled = false;
+        }
+        
         private void SwitchCardSprite()
         {
             if (transform.localRotation.y < 0.4f || transform.localRotation.y > 0.9f) return;

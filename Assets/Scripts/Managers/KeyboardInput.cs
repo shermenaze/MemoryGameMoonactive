@@ -4,9 +4,9 @@ namespace CardGame
 {
     public class KeyboardInput : IInput
     {
-        private readonly GameEventBool _gamePauseEvent;
+        private readonly GameEvent _gamePauseEvent;
 
-        public KeyboardInput(GameEventBool gamePauseEvent)
+        public KeyboardInput(GameEvent gamePauseEvent)
         {
             _gamePauseEvent = gamePauseEvent;
         }

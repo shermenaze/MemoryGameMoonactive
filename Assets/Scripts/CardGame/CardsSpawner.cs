@@ -18,6 +18,7 @@ namespace CardGame
         private readonly int _columns;
         private readonly int _rows;
         private readonly float _initialDelay;
+        private List<Card> _cardsList;
 
         #endregion
         
@@ -68,26 +69,43 @@ namespace CardGame
         public List<Card> InitCards()
         {
             var usedNumbers = new List<int>();
-            float animationDelay = 0;
             int orderInLayer = 0;
-            var cardsList = new List<Card>();
+            _cardsList = new List<Card>();
             
             for (int cardIndex = 0; cardIndex < _cardsAmount; cardIndex++)
             {
-                var card = GameObject.Instantiate(_cardPrefab, _instantiatePosition);
+                var card = Object.Instantiate(_cardPrefab, _instantiatePosition);
                 card.transform.localScale *= _cardsScale;
+                
                 var randomNumber = GetRandomNumber(_cardsSo, usedNumbers);
                 var cardSo = _cardsSo[randomNumber];
 
                 card.Init(cardSo, randomNumber, orderInLayer += 2);
-                cardsList.Add(card);
-                card.Animate(_deckPosition.position, animationDelay);
-                animationDelay += _initialDelay;
+                _cardsList.Add(card);
             }
 
-            return cardsList;
+            AnimateCards(_cardsList, _deckPosition.position);
+
+            return _cardsList;
+        }
+
+        public void RestartGame()//TODO: Restart game event
+        {
+            _cardsList.ForEach(card =>
+            {
+                card.ResetCard();
+                card.transform.localPosition = _instantiatePosition.position;
+            });
+            
+            AnimateCards(_cardsList, _deckPosition.position);
         }
         
+        private void AnimateCards(List<Card> cards, Vector3 position)
+        {
+            float animationDelay = 0;
+            cards.ForEach(card => card.Animate(position, animationDelay += _initialDelay));
+        }
+
         private static int GetRandomNumber(IReadOnlyCollection<CardSO> cards, List<int> usedNumbers)
         {
             int GetRandom() => Random.Range(0, cards.Count);

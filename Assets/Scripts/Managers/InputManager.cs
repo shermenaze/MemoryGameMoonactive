@@ -4,11 +4,19 @@ namespace CardGame
 {
     public class InputManager : MonoBehaviour
     {
-        [SerializeField] private Camera _camera;
-        [SerializeField] private GameEventBool _gamePauseEvent;
+        [SerializeField] private GameEvent _gamePauseEvent;
 
+        private Camera _camera;
         private IInput _inputSystem;
 
+        public void Init(Camera camera)
+        {
+            _camera = camera;
+            
+            name = name.Declone();
+            enabled = false;
+        }
+        
         private void Awake() => _inputSystem = new KeyboardInput(_gamePauseEvent);
 
         private void Update() => _inputSystem.CheckInput(_camera);

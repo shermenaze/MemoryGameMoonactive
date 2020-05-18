@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5d497d64a2428d498da501db89ef754, type: 3}
+  m_Name: Standard_GameConfig
+  m_EditorClassIdentifier: 
+  _inputManager: {fileID: 8972448592841064698, guid: d447bbbb70ff4da4aa8fa7bd1acb69ec,
+    type: 3}
+  _camera: {fileID: 4958340987758616544, guid: fd22ba722771c6242b92f1b00e8e50cd, type: 3}
