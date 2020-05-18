@@ -35,7 +35,7 @@ namespace CardGame.SaveSystem
 
         private void SetMute(bool isMute) => SetPref(MUTE_PREF, isMute);
 
-        private void SetTimer(float time) => SetPref(TIME_REMAINING_PREF, time);
+        private void SetTimeRemaining(float time) => SetPref(TIME_REMAINING_PREF, time);
 
         private void SetMusicVolume(float musicVolume) => SetPref(MUSIC_VOLUME_PREF, musicVolume);
 
@@ -47,7 +47,7 @@ namespace CardGame.SaveSystem
         
         public override void Save(GameState gameState) 
         {
-            SetTimer(gameState.TimeRemaining);
+            SetTimeRemaining(gameState.TimeRemaining);
             SetMusicVolume(gameState.MusicVolume);
             SetPlayerName(gameState.PlayerName);
             SetMute(gameState.Mute);
@@ -56,17 +56,29 @@ namespace CardGame.SaveSystem
 
         public override GameState Load()
         {
+            if(!PlayerPrefs.HasKey(PLAYER_NAME_PREF)) return null;
+
             var gameState = new GameState
             {
                 TimeRemaining = PlayerPrefs.GetFloat(TIME_REMAINING_PREF),
                 Mute = GetBoolPref(MUTE_PREF),
                 MusicVolume = PlayerPrefs.GetFloat(MUSIC_VOLUME_PREF),
-                PlayerName = PlayerPrefs.GetString(PLAYER_NAME_PREF)
+                PlayerName = PlayerPrefs.GetString(PLAYER_NAME_PREF),
+                Score = PlayerPrefs.GetInt(SCORE_PREF),
             };
 
             return gameState;
         }
 
-        public override void DeleteAll() { Debug.Log("Delete all!"); }
+        public override void DeleteAll()
+        {
+            if(!PlayerPrefs.HasKey(MUTE_PREF)) return;
+
+            PlayerPrefs.DeleteKey(TIME_REMAINING_PREF);
+            PlayerPrefs.DeleteKey(MUTE_PREF);
+            PlayerPrefs.DeleteKey(MUSIC_VOLUME_PREF);
+            PlayerPrefs.DeleteKey(PLAYER_NAME_PREF);
+            PlayerPrefs.DeleteKey(SCORE_PREF);
+        }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using CardGame.UI;
 using TMPro;
 using UnityEngine;
@@ -8,11 +7,12 @@ namespace CardGame.SaveSystem
 {
     public class SaveLoadManager : MonoBehaviour
     {
-        [Header("Save System")]
-        [SerializeField] private PickSaveSystem _pickSaveSystem;
+        [Header("Save System")] [SerializeField]
+        private PickSaveSystem _pickSaveSystem;
 
-        [Header("Items to Change")]
-        [SerializeField] private AudioSource _musicAudioSource;
+        [Header("Items to Change")] [SerializeField]
+        private AudioSource _musicAudioSource;
+
         [SerializeField] private Slider _musicVolumeSlider;
         [SerializeField] private Toggle _muteToggle;
         [SerializeField] private TMP_InputField _nameInput;
@@ -35,11 +35,11 @@ namespace CardGame.SaveSystem
                 TimeRemaining = _hud.Counter,
                 Score = 20
             };
-            
+
             Debug.Log(_hud.Counter);
             _saveSystem.Save(gameState);
         }
-        
+
         public void Load()
         {
             var gameState = _saveSystem.Load();
@@ -51,6 +51,6 @@ namespace CardGame.SaveSystem
             _hud.Counter = gameState.TimeRemaining;
         }
 
-        private enum PickSaveSystem{ PlayerPrefSaveSystem, MemorySaveSystem }
+        private enum PickSaveSystem { PlayerPrefSaveSystem, MemorySaveSystem }
     }
 }

@@ -52,7 +52,7 @@ namespace CardGame
             transform.DOMove(position, 1).SetDelay(animationDelay);
         }
 
-        public void Clicked()
+        public void Click()
         {
             _cardsGameManager.CheckMatch(this);
         }
