@@ -6,6 +6,9 @@ namespace CardGame
 {
     public class GameManager : MonoBehaviour
     {
+
+        #region Fields
+        
         [SerializeField] private GameConfig _gameConfig;
 
         private Camera _camera;
@@ -14,6 +17,8 @@ namespace CardGame
         private CanvasHolder _canvasHolder;
         private SaveLoadManager _saveLoadManager;
         private Hud _hud;
+
+        #endregion
 
         private void Awake()
         {
