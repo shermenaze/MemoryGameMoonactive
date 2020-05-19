@@ -3,7 +3,14 @@ guid: a5d497d64a2428d498da501db89ef754
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _inputManager: {fileID: 8972448592841064698, guid: d447bbbb70ff4da4aa8fa7bd1acb69ec,
+      type: 3}
+  - _saveLoadManager: {fileID: 731627044179689194, guid: 2f1cd882ba28e0a41929f17aa632960f,
+      type: 3}
+  - _audioManager: {fileID: 1646955529625626756, guid: 96a3eda541b9cf343a382c61a74ee91a,
+      type: 3}
+  - _camera: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

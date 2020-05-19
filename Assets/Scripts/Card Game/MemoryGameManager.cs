@@ -52,6 +52,12 @@ namespace CardGame
         public float InitialDelay => _initialDelay;
         
         #endregion
+
+        public void Init(Camera cam, Hud hud)
+        {
+            _camera = cam;
+            _hud = hud;
+        }
         
         private void Start()
         {

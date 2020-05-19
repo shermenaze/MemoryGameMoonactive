@@ -14,4 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputManager: {fileID: 8972448592841064698, guid: d447bbbb70ff4da4aa8fa7bd1acb69ec,
     type: 3}
+  _saveLoadManager: {fileID: 731627044179689194, guid: 2f1cd882ba28e0a41929f17aa632960f,
+    type: 3}
+  _audioManager: {fileID: 1646955529625626756, guid: 96a3eda541b9cf343a382c61a74ee91a,
+    type: 3}
+  _memoryGameManager: {fileID: 7883919850532300796, guid: 388b82930879b0340bad5ccd8a3668e6,
+    type: 3}
   _camera: {fileID: 4958340987758616544, guid: fd22ba722771c6242b92f1b00e8e50cd, type: 3}
+  _canvasHolder: {fileID: 8732603293552758962, guid: 961d67c784b194349903a886f489cb7b,
+    type: 3}
+  _gameUi: {fileID: 7633251676825038903, guid: ab66eac7ce3819747bbc70735fc928e9, type: 3}
+  _hud: {fileID: 359051087220890446, guid: 65213dfc2820b6e4091539a257187c75, type: 3}

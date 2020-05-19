@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -10,11 +11,17 @@ namespace CardGame.UI
 
         [SerializeField] private TextMeshProUGUI _counterText;
         [SerializeField] private GameEvent _gameLostEvent;
-        
-        private float _counter = 30;
+        [SerializeField] private float _counter = 30;
+
+        private float initialCounter;
         private bool _isGameOn;
 
         #endregion
+
+        private void Awake()
+        {
+            initialCounter = _counter;
+        }
 
         private void Update()
         {
@@ -56,7 +63,7 @@ namespace CardGame.UI
                 .OnComplete(()=>
                 {
                     ChangeCounterTextColor(Color.white);
-                    _counter = 30;
+                    _counter = initialCounter;
                 });
         }
         

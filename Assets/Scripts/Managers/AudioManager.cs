@@ -6,29 +6,31 @@ namespace CardGame
     {
         public static AudioManager Instance { get; private set; }
 
-        private AudioSource _musicSource;
+        public AudioSource AudioSource => _audioSource;
+        
+        private AudioSource _audioSource;
 
         private void Awake()
         {
             if (Instance != null && Instance != this) Destroy(gameObject);
             else Instance = this;
 
-            _musicSource = GetComponent<AudioSource>();
+            _audioSource = GetComponent<AudioSource>();
         }
 
         public void PlaySound(AudioClip clip, float volume = 1f)
         {
-            if (_musicSource) _musicSource.PlayOneShot(clip, volume);
+            if (_audioSource) _audioSource.PlayOneShot(clip, volume);
         }
 
         public void SetVolume(float value)
         {
-            _musicSource.volume = value;
+            _audioSource.volume = value;
         }
         
         public void SetMute(bool value)
         {
-            _musicSource.mute = value;
+            _audioSource.mute = value;
         }
     }
 }

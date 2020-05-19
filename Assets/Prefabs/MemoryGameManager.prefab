@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7883919849217524380
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7883919849217524381}
+  m_Layer: 0
+  m_Name: Cards_Initial_Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7883919849217524381
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883919849217524380}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 6.67, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7883919850532300797}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7883919850532300787
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7883919850532300797}
+  - component: {fileID: 7883919850532300796}
+  - component: {fileID: 7883919850532300798}
+  m_Layer: 0
+  m_Name: MemoryGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7883919850532300797
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883919850532300787}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 7883919849217524381}
+  - {fileID: 7883919850537184523}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7883919850532300796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883919850532300787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89e652d36d764744cbebe89c29bdeb25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _camera: {fileID: 0}
+  _boardData: {fileID: 11400000, guid: 0364de0acad799540b18f8919dde53ca, type: 2}
+  _hud: {fileID: 0}
+  _cardDragAudioClip: {fileID: 8300000, guid: 20b3b4bf8fea7f64b955ef17f0d401ce, type: 3}
+  _winGameEvent: {fileID: 11400000, guid: d9f2a5921e0a0444cb6d8a5564704942, type: 2}
+  _cardPrefab: {fileID: 2081547044, guid: 8378af9638fe39d4c80f31be4aa34b81, type: 3}
+  _cardsSo:
+  - {fileID: 11400000, guid: 8ba768f587399c94c8060b3a9bcf840b, type: 2}
+  - {fileID: 11400000, guid: af7590c35fd3caa4fb4bbd58a6f49549, type: 2}
+  - {fileID: 11400000, guid: 5fdc00f48cae0d6408287acfd399f4c9, type: 2}
+  - {fileID: 11400000, guid: f70233141e728834c8f2ee9f729a0d9f, type: 2}
+  - {fileID: 11400000, guid: 9881ad2ec02f94546abb6b011fe964e2, type: 2}
+  - {fileID: 11400000, guid: dd77f2ff34af29040bd4fb4430f49f7c, type: 2}
+  - {fileID: 11400000, guid: d553d1ac3aa128e4981804c57c38e986, type: 2}
+  - {fileID: 11400000, guid: 680c273fb7e0e7f49a656286b645869d, type: 2}
+  _initialTransform: {fileID: 7883919849217524381}
+  _deckTransform: {fileID: 7883919850537184523}
+  _initialDelay: 0.05
+  _moveCardToPositionDelay: 0.1
+  _timeBeforeCardsHide: 5
+--- !u!114 &7883919850532300798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883919850532300787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1e5eb13311484c47b0c6ee0d3e34dd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respondWhenDisabled: 0
+  _gameEvent: {fileID: 11400000, guid: 11ee74efb20ef97488c87106471bb24a, type: 2}
+  _eventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7883919850532300796}
+        m_MethodName: RestartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &7883919850537184522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7883919850537184523}
+  m_Layer: 0
+  m_Name: Cards_Deck_Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7883919850537184523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7883919850537184522}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7883919850532300797}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
