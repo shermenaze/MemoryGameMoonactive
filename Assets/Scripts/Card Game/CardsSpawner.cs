@@ -22,20 +22,27 @@ namespace CardGame
 
         #endregion
         
-        public CardsSpawner(BoardSo _boardData, Camera camera, Card cardPrefab,
-            Transform initialPosition, Transform deckPosition, CardSO[] cardsSo, float initialDelay)
+        public CardsSpawner(MemoryGameManager memoryGameManager)
         {
-            _initialDelay = initialDelay;
-            _deckPosition = deckPosition;
-            _cardsSo = cardsSo;
-            _instantiatePosition = initialPosition;
-            _cardPrefab = cardPrefab;
-            _camera = camera;
-            _columns = _boardData.Columns;
-            _rows = _boardData.Rows;
+            _camera = memoryGameManager.CurrentCamera;
+            
+            _instantiatePosition = memoryGameManager.InitialTransform;
+            _deckPosition = memoryGameManager.DeckTransform;
+            
+            _cardsSo = memoryGameManager.CardsSo;
+            _cardPrefab = memoryGameManager.CardPrefab;
+
+            _initialDelay = memoryGameManager.InitialDelay;
+            
+            _columns = memoryGameManager.BoardData.Columns;
+            _rows = memoryGameManager.BoardData.Rows;
             _cardsAmount = _columns * _rows;
         }
         
+        /// <summary>
+        /// Calculates camera's aspect ratio to initiate an array of columns by rows Vector3 positions
+        /// </summary>
+        /// <returns>A pre calculated array of Vector3 positions</returns>
         public Vector3[] InitCardsPositions()
         {
             var positions = new Vector3[_cardsAmount];
@@ -66,6 +73,10 @@ namespace CardGame
             return positions;
         }
 
+        /// <summary>
+        /// Instantiates Cards and animate them towards their initial position
+        /// </summary>
+        /// <returns>A list of initialized Cards</returns>
         public List<Card> InitCards()
         {
             var usedNumbers = new List<int>();
@@ -73,23 +84,33 @@ namespace CardGame
             _cardsList = new List<Card>();
             
             for (int cardIndex = 0; cardIndex < _cardsAmount; cardIndex++)
-            {
-                var card = Object.Instantiate(_cardPrefab, _instantiatePosition);
-                card.transform.localScale *= _cardsScale;
-                
-                var randomNumber = GetRandomNumber(_cardsSo, usedNumbers);
-                var cardSo = _cardsSo[randomNumber];
-
-                card.Init(cardSo, randomNumber, orderInLayer += 2);
-                _cardsList.Add(card);
-            }
+                InstantiateCard(usedNumbers, ref orderInLayer);
 
             AnimateCards(_cardsList, _deckPosition.position);
 
             return _cardsList;
         }
 
-        public void RestartGame()//TODO: Restart game event
+        /// <summary>
+        /// Instantiate a card, scale it according to camera size,
+        /// assign it a random number index,
+        /// Initialize it and increment order in layer by 2
+        /// </summary>
+        /// <param name="usedNumbers">A list of numbers used to index other cards</param>
+        /// <param name="orderInLayer">The order in layer for the current Card</param>
+        private void InstantiateCard(List<int> usedNumbers, ref int orderInLayer)
+        {
+            var card = Object.Instantiate(_cardPrefab, _instantiatePosition);
+            card.transform.localScale *= _cardsScale;
+
+            var randomNumber = GetRandomNumber(_cardsSo, usedNumbers);
+            var cardSo = _cardsSo[randomNumber];
+
+            card.Init(cardSo, randomNumber, orderInLayer += 2);
+            _cardsList.Add(card);
+        }
+
+        public void RestartGame()
         {
             _cardsList.ForEach(card =>
             {
@@ -100,12 +121,23 @@ namespace CardGame
             AnimateCards(_cardsList, _deckPosition.position);
         }
         
-        private void AnimateCards(List<Card> cards, Vector3 position)
+        /// <summary>
+        /// Animate all cards with a delay from current position towards EndPosition
+        /// </summary>
+        /// <param name="cards">A List of cards</param>
+        /// <param name="EndPosition">The goal position</param>
+        private void AnimateCards(List<Card> cards, Vector3 EndPosition)
         {
             float animationDelay = 0;
-            cards.ForEach(card => card.Animate(position, animationDelay += _initialDelay));
+            cards.ForEach(card => card.Animate(EndPosition, animationDelay += _initialDelay));
         }
 
+        /// <summary>
+        /// Gets a random number that was not previously chosen
+        /// </summary>
+        /// <param name="cards">A list of cards</param>
+        /// <param name="usedNumbers">A list for used random numbers</param>
+        /// <returns>New random number</returns>
         private static int GetRandomNumber(IReadOnlyCollection<CardSO> cards, List<int> usedNumbers)
         {
             int GetRandom() => Random.Range(0, cards.Count);

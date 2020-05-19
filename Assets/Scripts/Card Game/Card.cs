@@ -37,7 +37,7 @@ namespace CardGame
             _collider = GetComponent<Collider2D>();
             _memoryGameManager = GetComponentInParent<MemoryGameManager>();
         }
-
+        
         public void Init(CardSO cardData, int cardNumber, int sortingOrder)
         {
             _cardData = cardData;
@@ -50,16 +50,29 @@ namespace CardGame
             _frameSpriteRenderer.sortingOrder += sortingOrder;
         }
 
-        public void Animate(Vector3 position, float animationDelay)
+        /// <summary>
+        /// Moves this Card to a goal position
+        /// </summary>
+        /// <param name="endPosition">The end position</param>
+        /// <param name="animationDelay">Delay before animation begins</param>
+        public void Animate(Vector3 endPosition, float animationDelay)
         {
-            transform.DOMove(position, 1).SetDelay(animationDelay);
+            transform.DOMove(endPosition, 1).SetDelay(animationDelay);
         }
 
+        /// <summary>
+        /// The Card was clicked; Check match to previously clicked Card
+        /// </summary>
         public void Click()
         {
             _memoryGameManager.CheckMatch(this);
         }
 
+        /// <summary>
+        /// Rotates card to face the other way
+        /// </summary>
+        /// <param name="enabledWhenDone">Should this Card's Collider be enabled after rotation</param>
+        /// <param name="delay">Delay before rotation</param>
         public void RotateCard(bool enabledWhenDone, float delay = 0)
         {
             Enabled = false;
@@ -77,14 +90,19 @@ namespace CardGame
                     Enabled = enabledWhenDone;
                 });
         }
-        
+
+        /// <summary>
+        /// If this Card is facing up, rotates it, sets collider enabled to false
+        /// </summary>
         public void ResetCard()
         {
-            Debug.Log(name + " " + _isFaceUp);
             if (_isFaceUp) RotateCard(false, 0.4f);
             Enabled = false;
         }
         
+        /// <summary>
+        /// Switch this Card's sprite according to its rotation
+        /// </summary>
         private void SwitchCardSprite()
         {
             if (transform.localRotation.y < 0.4f || transform.localRotation.y > 0.9f) return;

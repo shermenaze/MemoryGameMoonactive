@@ -28,7 +28,7 @@ namespace CardGame
         [SerializeField] private TMP_InputField _playerNameInput;
 
         private RectTransform _currentMenu;
-        private RectTransform _lastMenu;
+        private RectTransform _previousMenu;
         private HeaderMessageSO _lastMessage;
         private bool _isEnabled;
 
@@ -58,7 +58,9 @@ namespace CardGame
         /// <param name="menu">The menu to show</param>
         public void ShowMenu(RectTransform menu)
         {
-            //if(menu == _currentMenu) return;
+            if(_previousMenu == _currentMenu) return;
+            _previousMenu = _currentMenu;
+
             menu.gameObject.SetActive(true);
             
             var newPosition = _screensParent.localPosition.y > 0 ? Vector2.zero : new Vector2(0, 1080);
@@ -68,7 +70,6 @@ namespace CardGame
                 .SetUpdate(true)
                 .OnComplete(()=>
                 {
-                    _lastMenu = _currentMenu;
                     _currentMenu.gameObject.SetActive(false);
                     _currentMenu = menu;
                 });
@@ -79,7 +80,7 @@ namespace CardGame
         /// </summary>
         public void ShowLastMenu()
         {
-            ShowMenu(_lastMenu);
+            ShowMenu(_previousMenu);
             SetHeader(_lastMessage);
         }
         

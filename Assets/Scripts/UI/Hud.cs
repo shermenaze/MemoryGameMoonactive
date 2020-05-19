@@ -16,22 +16,20 @@ namespace CardGame.UI
 
         #endregion
 
-        public float Counter
-        {
-            get => _counter;
-            set => _counter = value;
-        }
-
         private void Update()
         {
             if (_isGameOn) Count();
         }
 
+        /// <summary>
+        /// Counts down to 0, if under 0, game lost
+        /// </summary>
         private void Count()
         {
             if (_counter <= 0)
             {
                 _counterText.text = 0.ToString();
+                RestartGame();
                 _gameLostEvent.Raise();
 
                 _counterText.transform.DOScale(Vector3.zero, 0.3f);
@@ -39,20 +37,25 @@ namespace CardGame.UI
                 _isGameOn = false;
             }
 
-            if (_counter <= 6) _counterText.color = Color.red;
-            else if (_counter <= 15) _counterText.color = Color.yellow;
+            if (_counter <= 6) ChangeCounterTextColor(Color.red);
+            else if (_counter <= 15) ChangeCounterTextColor(Color.yellow);
 
             _counter -= Time.deltaTime;
             _counterText.text = _counter.ToString("F0");
         }
 
-        public void RestartGame()//TODO: Restart game event
+        private void ChangeCounterTextColor(Color color)
+        {
+            _counterText.color = color;
+        }
+
+        public void RestartGame()
         {
             _isGameOn = false;
             _counterText.transform.DOScale(Vector3.zero, 0.3f).SetUpdate(true)
                 .OnComplete(()=>
                 {
-                    _counterText.color = Color.white;
+                    ChangeCounterTextColor(Color.white);
                     _counter = 30;
                 });
         }

@@ -1,3 +1,4 @@
+using GameEvents;
 using UnityEngine;
 
 namespace CardGame
