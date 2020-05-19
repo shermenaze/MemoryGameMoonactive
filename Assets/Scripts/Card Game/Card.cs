@@ -12,6 +12,7 @@ namespace CardGame
         [SerializeField] private SpriteRenderer _cardSpriteRenderer;
         [SerializeField] private SpriteRenderer _frameSpriteRenderer;
         [SerializeField] private AudioClip _cardFlipAudio;
+        [SerializeField] private ParticleSystem _particleSystem;
 
         private MemoryGameManager _memoryGameManager;
         private CardSO _cardData;
@@ -29,6 +30,8 @@ namespace CardGame
         public int CardNumber => _cardNumber;
         public bool FaceUp => _isFaceUp;
 
+        public ParticleSystem Particles => _particleSystem;
+        
         #endregion
 
         private void Awake()

@@ -122,7 +122,6 @@ namespace CardGame
             else if (_currentCard.CardNumber == card.CardNumber)
             {
                 if ((_matches += 2) >= _cardsList.Count) _winGameEvent.Raise();
-                //TODO: Activate both cards particle systems.
                 _currentCard = null;
             }
             else
