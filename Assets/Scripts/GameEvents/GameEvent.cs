@@ -29,10 +29,7 @@ namespace CardGame
         public void Raise()
         {
             for (int listenerIndex = _listeners.Count - 1; listenerIndex >= 0; listenerIndex--)
-            {
-                Debug.Log(_listeners[listenerIndex].name);
                 _listeners[listenerIndex].BaseOnEventRaised();
-            }
         }
     }
 }
