@@ -16,13 +16,15 @@ namespace CardGame
         [SerializeField] private Hud _hud;
         [SerializeField] private AudioClip _cardDragAudioClip;
         [SerializeField] private GameEvent _winGameEvent;
-        
-        [Space, Header("Cards")]
-        [SerializeField] private Card _cardPrefab;
+
+        [Space, Header("Cards")] [SerializeField]
+        private Card _cardPrefab;
+
         [SerializeField] private CardSO[] _cardsSo;
 
-        [Header("Animations")] 
-        [SerializeField] private Transform _instantiatePosition;
+        [Header("Animations")] [SerializeField]
+        private Transform _instantiatePosition;
+
         [SerializeField] private Transform _deckPosition;
         [SerializeField] [Range(0, 0.2f)] private float _initialDelay;
         [SerializeField] [Range(0, 0.5f)] private float _moveCardToPositionDelay;
@@ -44,11 +46,17 @@ namespace CardGame
             _cardsPositions = _cardsSpawner.InitCardsPositions();
             _cardsList = _cardsSpawner.InitCards();
         }
-        
+
         public async void StartGame()
         {
             AudioManager.Instance.PlaySound(_cardDragAudioClip, 1.5f);
-            await Task.Delay(TimeSpan.FromSeconds(3));
+            int timeToWait = 2;
+
+            await Task.Delay(TimeSpan.FromSeconds(timeToWait));
+
+            while (Time.timeScale < 0.9f)
+                await Task.Delay(TimeSpan.FromSeconds(timeToWait - 1));
+
             MoveCardsToPosition();
         }
 
@@ -61,7 +69,7 @@ namespace CardGame
             _matches = 0;
             StartGame();
         }
-        
+
         private void MoveCardsToPosition()
         {
             float animationDelay = 0;
@@ -82,7 +90,7 @@ namespace CardGame
             _cardsList.ForEach(card => card.RotateCard(false, duration += 0.1f));
             yield return new WaitForSeconds(5f);
             _cardsList.ForEach(card => card.RotateCard(true));
-            
+
             _hud.StartCounter();
         }
 

@@ -1,57 +1,69 @@
-using CardGame.UI;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace CardGame.SaveSystem
 {
     public class SaveLoadManager : MonoBehaviour
     {
+        #region Fields
+
         [Header("Save System")]
         [SerializeField] private PickSaveSystem _pickSaveSystem;
+        
+        [Space]
+        [SerializeField] private BaseSaveSystem _inMemorySaveSystem;
+        [SerializeField] private BaseSaveSystem _playerPrefSaveSystem;
 
-        [Header("Items to Change")]
-        [SerializeField] private AudioSource _musicAudioSource;
-        [SerializeField] private Slider _musicVolumeSlider;
-        [SerializeField] private Toggle _muteToggle;
-        [SerializeField] private TMP_InputField _nameInput;
-        [SerializeField] private Hud _hud;
+        [Header("Save and Load Events")]
+        [SerializeField] private GameEventGameState _loadGameEvent;
+        [SerializeField] private GameEventGameState _saveGameEvent;
 
         private BaseSaveSystem _saveSystem;
-        
         private enum PickSaveSystem { PlayerPrefSaveSystem, MemorySaveSystem }
+        
+        #endregion
 
+        /// <summary>
+        /// Loads a save system from the available list
+        /// </summary>
         private void Awake()
         {
-            _saveSystem = Resources.Load<BaseSaveSystem>(_pickSaveSystem.ToString());
+            BaseSaveSystem saveSystem;
+            
+            switch (_pickSaveSystem)
+            {
+                case PickSaveSystem.PlayerPrefSaveSystem:
+                    saveSystem = _playerPrefSaveSystem;
+                    break;
+                case PickSaveSystem.MemorySaveSystem:
+                    saveSystem = _inMemorySaveSystem;
+                    break;
+                default:
+                    saveSystem = _playerPrefSaveSystem;
+                    break;
+            }
+
+            _saveSystem = saveSystem;
         }
 
+        /// <summary>
+        /// Creates a new GameState, collects data from all listeners, and saves
+        /// using the chosen SaveSystem
+        /// </summary>
         public void Save()
         {
-            var gameState = new GameState
-            {
-                MusicVolume = _musicVolumeSlider.value,
-                Mute = _muteToggle.isOn,
-                PlayerName = _nameInput.text,
-                TimeRemaining = _hud.Counter,
-                Score = 20
-            };
+            var gameState = new GameState();
             
+            _saveGameEvent.Raise(gameState);
             _saveSystem.Save(gameState);
         }
 
+        /// <summary>
+        /// Loads a game state from the current SaveSystem, and distribute it to all listeners
+        /// </summary>
         public void Load()
         {
             var gameState = _saveSystem.Load();
-            
-            if (gameState != null)
-            {
-                _musicAudioSource.volume = gameState.MusicVolume;
-                _musicVolumeSlider.value = gameState.MusicVolume;
-                _muteToggle.isOn = gameState.Mute;
-                _nameInput.text = gameState.PlayerName;
-                _hud.Counter = gameState.TimeRemaining;
-            }
+            _loadGameEvent.Raise(gameState);
         }
     }
 }

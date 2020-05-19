@@ -1,7 +1,8 @@
-﻿using System;
+﻿using CardGame.SaveSystem;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CardGame
 {
@@ -9,14 +10,22 @@ namespace CardGame
     {
         #region Fields
 
+        [Header("Screens")]
         [SerializeField] private RectTransform _uiElements;
-        [SerializeField] private RectTransform _settingsMover;
+        [SerializeField] private RectTransform _screensParent;
         [SerializeField] private RectTransform _welcomeMenu;
         [SerializeField] private RectTransform _pauseMenu;
-        [SerializeField] [Range(0, 2)] private int _moveDuration = 1;
+        
+        [Header("Animations")]
+        [SerializeField] [Range(0, 2)] private int _screenMoveDuration = 1;
         [SerializeField] [Range(0, 2)] private float _menuScaleDuration = 0.4f;
         [SerializeField] private TextMeshProUGUI _headerText;
         [SerializeField] private HeaderMessageSO _welcomeHeaderMessageSo;
+
+        [Header("Loadable Elements")]
+        [SerializeField] private Slider _volumeLevel;
+        [SerializeField] private Toggle _muteToggle;
+        [SerializeField] private TMP_InputField _playerNameInput;
 
         private RectTransform _currentMenu;
         private RectTransform _lastMenu;
@@ -31,7 +40,7 @@ namespace CardGame
             _lastMessage = _welcomeHeaderMessageSo;
             _currentMenu = _welcomeMenu;
             _isEnabled = true;
-            ScaleUI();
+            ScaleUi();
         }
 
         /// <summary>
@@ -49,11 +58,12 @@ namespace CardGame
         /// <param name="menu">The menu to show</param>
         public void ShowMenu(RectTransform menu)
         {
+            //if(menu == _currentMenu) return;
             menu.gameObject.SetActive(true);
             
-            var newPosition = _settingsMover.localPosition.y > 0 ? Vector2.zero : new Vector2(0, 1080);
+            var newPosition = _screensParent.localPosition.y > 0 ? Vector2.zero : new Vector2(0, 1080);
             
-            _settingsMover.DOLocalMove(newPosition, _isEnabled ? 0 : _moveDuration)
+            _screensParent.DOLocalMove(newPosition, _isEnabled ? 0 : _screenMoveDuration)
                 .SetEase(Ease.InOutQuint)
                 .SetUpdate(true)
                 .OnComplete(()=>
@@ -76,7 +86,7 @@ namespace CardGame
         /// <summary>
         /// Scales the UI according to _isEnabled
         /// </summary>
-        public void ScaleUI()
+        public void ScaleUi()
         {
             if (_isEnabled)
             {
@@ -94,13 +104,35 @@ namespace CardGame
                 _uiElements.DOScale(Vector3.zero, _menuScaleDuration).SetEase(Ease.InQuint)
                     .OnComplete(() =>
                     {
-                        _settingsMover.localPosition = Vector2.zero;
+                        _screensParent.localPosition = Vector2.zero;
                         _currentMenu.gameObject.SetActive(false);
                         _currentMenu = _pauseMenu;
                     });
                 
                 _isEnabled = true;
             }
+        }
+        
+        /// <summary>
+        /// Save all loadable elements into the incoming GameState
+        /// </summary>
+        /// <param name="gameState">new GameState</param>
+        public void SaveGame(GameState gameState)
+        {
+            if(gameState != null && _muteToggle) gameState.Mute = _muteToggle.isOn;
+            if(gameState != null && _volumeLevel) gameState.MusicVolume = _volumeLevel.value;
+            if(gameState != null && _playerNameInput) gameState.PlayerName = _playerNameInput.text;
+        }
+        
+        /// <summary>
+        /// Load all loadable elements from the incoming GameState
+        /// </summary>
+        /// <param name="gameState">Loaded GameState</param>
+        public void LoadGame(GameState gameState)
+        {
+            if(gameState != null && _muteToggle) _muteToggle.isOn = gameState.Mute;
+            if(gameState != null && _volumeLevel) _volumeLevel.value = gameState.MusicVolume;
+            if(gameState != null && _playerNameInput) _playerNameInput.text = gameState.PlayerName;
         }
     }
 }

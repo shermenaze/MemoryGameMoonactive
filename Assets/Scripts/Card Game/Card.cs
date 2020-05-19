@@ -80,7 +80,8 @@ namespace CardGame
         
         public void ResetCard()
         {
-            if (_isFaceUp) RotateCard(false, 0);
+            Debug.Log(name + " " + _isFaceUp);
+            if (_isFaceUp) RotateCard(false, 0.4f);
             Enabled = false;
         }
         

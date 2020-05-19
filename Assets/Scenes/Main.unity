@@ -215,7 +215,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1844175264}
-        m_MethodName: ScaleUI
+        m_MethodName: ScaleUi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -663,12 +663,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d2763980bf741cea2659167638ac5e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pickSaveSystem: 1
-  _musicAudioSource: {fileID: 100951860}
-  _musicVolumeSlider: {fileID: 789111603}
-  _muteToggle: {fileID: 1306852083}
-  _nameInput: {fileID: 1552388042}
-  _hud: {fileID: 1737966066}
+  _pickSaveSystem: 0
+  _inMemorySaveSystem: {fileID: 11400000, guid: ff45b01629596ff46916ef6b2b9398eb,
+    type: 2}
+  _playerPrefSaveSystem: {fileID: 11400000, guid: 792b85e74dcb2ca4b9c2d296cb9425f6,
+    type: 2}
+  _loadGameEvent: {fileID: 11400000, guid: 20d8f0a69ce93a449ae41d547a28977c, type: 2}
+  _saveGameEvent: {fileID: 11400000, guid: 509047f9a7c9c214fbd631fb7872eec9, type: 2}
 --- !u!4 &217346167
 Transform:
   m_ObjectHideFlags: 0
@@ -3322,7 +3323,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 822921841}
   m_OnClick:
     m_PersistentCalls:
@@ -3544,7 +3545,7 @@ GameObject:
   - component: {fileID: 892133150}
   - component: {fileID: 892133151}
   m_Layer: 5
-  m_Name: Lose_Items
+  m_Name: Lose_Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3662,7 +3663,7 @@ GameObject:
   - component: {fileID: 968832690}
   - component: {fileID: 968832691}
   m_Layer: 5
-  m_Name: Welcome_Items
+  m_Name: Welcome_Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4340,7 +4341,7 @@ GameObject:
   - component: {fileID: 1153794949}
   - component: {fileID: 1153794950}
   m_Layer: 5
-  m_Name: Win_Items
+  m_Name: Win_Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4689,7 +4690,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1844175264}
-        m_MethodName: ScaleUI
+        m_MethodName: ScaleUi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4709,6 +4710,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 822921840}
+        m_MethodName: set_interactable
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1201304355
 MonoBehaviour:
@@ -4868,7 +4880,7 @@ GameObject:
   - component: {fileID: 1251888341}
   - component: {fileID: 1251888342}
   m_Layer: 5
-  m_Name: Settings_Items
+  m_Name: Settings_Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6292,7 +6304,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1844175264}
-        m_MethodName: ScaleUI
+        m_MethodName: ScaleUi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7346,6 +7358,8 @@ GameObject:
   - component: {fileID: 1844175265}
   - component: {fileID: 1844175266}
   - component: {fileID: 1844175267}
+  - component: {fileID: 1844175269}
+  - component: {fileID: 1844175268}
   m_Layer: 5
   m_Name: Canvas_UI
   m_TagString: Untagged
@@ -7446,14 +7460,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiElements: {fileID: 470192868}
-  _settingsMover: {fileID: 2144970060}
+  _screensParent: {fileID: 2144970060}
   _welcomeMenu: {fileID: 968832690}
   _pauseMenu: {fileID: 2038886191}
-  _moveDuration: 1
+  _screenMoveDuration: 1
   _menuScaleDuration: 0.4
   _headerText: {fileID: 1647703060}
   _welcomeHeaderMessageSo: {fileID: 11400000, guid: b1060e251413f764083c5b6bcdb84fc3,
     type: 2}
+  _volumeLevel: {fileID: 789111603}
+  _muteToggle: {fileID: 1306852083}
+  _playerNameInput: {fileID: 1552388042}
 --- !u!114 &1844175265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7472,7 +7489,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1844175264}
-        m_MethodName: ScaleUI
+        m_MethodName: ScaleUi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7523,7 +7540,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1844175264}
-        m_MethodName: ScaleUI
+        m_MethodName: ScaleUi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7574,7 +7591,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1844175264}
-        m_MethodName: ScaleUI
+        m_MethodName: ScaleUi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7591,6 +7608,64 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 11400000, guid: 6c04089908c5d394ba5bc33aae15155f,
             type: 2}
           m_ObjectArgumentAssemblyTypeName: CardGame.HeaderMessageSO, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1844175268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844175259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a06a9b1b45948e7a2fed7cf8fda09d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respondWhenDisabled: 0
+  _gameEventGameState: {fileID: 11400000, guid: 20d8f0a69ce93a449ae41d547a28977c,
+    type: 2}
+  _eventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1844175264}
+        m_MethodName: LoadGame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1844175269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844175259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a06a9b1b45948e7a2fed7cf8fda09d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _respondWhenDisabled: 0
+  _gameEventGameState: {fileID: 11400000, guid: 509047f9a7c9c214fbd631fb7872eec9,
+    type: 2}
+  _eventResponse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1844175264}
+        m_MethodName: SaveGame
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8132,7 +8207,7 @@ GameObject:
   - component: {fileID: 2038886191}
   - component: {fileID: 2038886192}
   m_Layer: 5
-  m_Name: Pause_Items
+  m_Name: Pause_Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8255,7 +8330,7 @@ GameObject:
   - component: {fileID: 2144970060}
   - component: {fileID: 2144970061}
   m_Layer: 5
-  m_Name: Settings_Mover
+  m_Name: ScreensParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
