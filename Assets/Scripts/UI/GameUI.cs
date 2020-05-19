@@ -34,7 +34,7 @@ namespace CardGame.UI
 
         private RectTransform _currentMenu;
         private RectTransform _previousMenu;
-        private HeaderMessageSO _lastMessage;
+        private string _lastMessage;
         private bool _isEnabled;
         private SaveLoadManager _saveLoadManager;
 
@@ -43,7 +43,7 @@ namespace CardGame.UI
         private void Awake()
         {
             SetHeader(_welcomeHeaderMessageSo);
-            _lastMessage = _welcomeHeaderMessageSo;
+            _lastMessage = _welcomeHeaderMessageSo.Message;
             _currentMenu = _welcomeMenu;
             _isEnabled = true;
             ScaleUi();
@@ -82,10 +82,11 @@ namespace CardGame.UI
         /// <param name="menu">The menu to show</param>
         public void ShowMenu(RectTransform menu)
         {
+            //if (_previousMenu == _currentMenu) return;
             _previousMenu = _currentMenu;
 
             menu.gameObject.SetActive(true);
-
+            
             var newPosition = _screensParent.localPosition.y > 0 ? Vector2.zero : new Vector2(0, 1080);
 
             _screensParent.DOLocalMove(newPosition, _isEnabled ? 0 : _screenMoveDuration)
@@ -104,7 +105,7 @@ namespace CardGame.UI
         public void ShowLastMenu()
         {
             ShowMenu(_previousMenu);
-            SetHeader(_lastMessage);
+            _lastMessage = _headerText.text;
         }
 
         /// <summary>
