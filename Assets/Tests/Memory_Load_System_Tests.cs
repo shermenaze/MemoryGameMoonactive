@@ -1,6 +1,5 @@
 using CardGame.SaveSystem;
 using NUnit.Framework;
-using UnityEngine;
 
 namespace Tests
 {

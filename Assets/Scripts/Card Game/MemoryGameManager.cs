@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CardGame.UI;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace CardGame
 {
@@ -67,6 +68,23 @@ namespace CardGame
             _cardsList = _cardsSpawner.InitCards();
         }
 
+        private void ShuffleCardsPositions(Vector3[] positions)
+        {
+            //Fisher-Yates shuffle
+            
+            int currentIndex = positions.Length;
+
+            while (currentIndex != 0)
+            {
+                var randomIndex = Mathf.FloorToInt(Random.value * currentIndex);
+                currentIndex -= 1;
+                
+                var tempValue = positions[currentIndex];
+                positions[currentIndex] = positions[randomIndex];
+                positions[randomIndex] = tempValue;
+            }
+        }
+        
         public async void StartGame()
         {
             AudioManager.Instance.PlaySound(_cardDragAudioClip, 1.5f);
@@ -81,6 +99,7 @@ namespace CardGame
         {
             if (_currentCard) _currentCard = null;
             
+            ShuffleCardsPositions(_cardsPositions);
             _cardsSpawner.RestartGame();
             _matches = 0;
             StartGame();

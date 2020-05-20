@@ -835,7 +835,6 @@ MonoBehaviour:
   _headerText: {fileID: 7633251676879693187}
   _screenMoveDuration: 1
   _menuScaleDuration: 0.4
-  _headerAnimationDuration: 0.5
   _startButton: {fileID: 7633251677461422773}
   _saveButton: {fileID: 7633251676841497159}
   _loadButton: {fileID: 7633251677187613337}
@@ -867,18 +866,6 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0.4
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7633251676825038903}
-        m_MethodName: SetHeader
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 1899f18ad33c1334f942ceee619657d1,
-            type: 2}
-          m_ObjectArgumentAssemblyTypeName: CardGame.HeaderMessageSO, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
@@ -4065,7 +4052,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

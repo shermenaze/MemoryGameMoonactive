@@ -2,6 +2,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace CardGame.UI
@@ -10,14 +11,14 @@ namespace CardGame.UI
     {
         #region Fields
 
-        [Header("Screens")] 
-        [SerializeField] private RectTransform _uiElements;
+        [Header("Screens")] [SerializeField] private RectTransform _uiElements;
         [SerializeField] private RectTransform _screensParent;
         [SerializeField] private UiScreen _welcomeScreen;
         [SerializeField] private UiScreen _pauseScreen;
 
-        [Header("Animations")]
-        [SerializeField] private TextMeshProUGUI _headerText;
+        [Header("Animations")] [SerializeField]
+        private TextMeshProUGUI _headerText;
+
         [SerializeField] [Range(0, 2)] private int _screenMoveDuration = 1;
         [SerializeField] [Range(0, 2)] private float _menuScaleDuration = 0.4f;
 
@@ -25,8 +26,9 @@ namespace CardGame.UI
         [SerializeField] private Button _saveButton;
         [SerializeField] private Button _loadButton;
 
-        [Header("Loadable Elements")]
-        [SerializeField] private Slider _volumeLevel;
+        [Header("Loadable Elements")] [SerializeField]
+        private Slider _volumeLevel;
+
         [SerializeField] private Toggle _muteToggle;
         [SerializeField] private TMP_InputField _playerNameInput;
 
@@ -34,6 +36,9 @@ namespace CardGame.UI
         private UiScreen _previousMenu;
         private SaveLoadManager _saveLoadManager;
         private InputManager _inputManager;
+        private Button _currentClickedButton;
+        private Button _previousClickedButton;
+        private EventSystem _eventSystem;
         private bool _isEnabled;
 
         #endregion
@@ -45,6 +50,8 @@ namespace CardGame.UI
             _isEnabled = true;
             ScaleUi();
         }
+
+        private void Start() => _eventSystem = EventSystem.current;
 
         public void Init(SaveLoadManager saveLoadManager, InputManager inputManager)
         {
@@ -70,7 +77,7 @@ namespace CardGame.UI
         /// Sets the UI header text according to the menu type provided
         /// </summary>
         /// <param name="headerMessageSo">Header message object</param>
-        public void SetHeader(HeaderMessageSO headerMessageSo)
+        private void SetHeader(HeaderMessageSO headerMessageSo)
         {
             _headerText.text = headerMessageSo.Message;
             _headerText.DOFade(1, _screenMoveDuration * 0.5f).SetUpdate(true);
@@ -82,9 +89,11 @@ namespace CardGame.UI
         /// <param name="menu">The menu to show</param>
         public void ShowMenu(UiScreen menu)
         {
+            EnableInput(false);
+
             _headerText.DOFade(0, _screenMoveDuration * 0.5f).SetUpdate(true)
                 .OnComplete(() => SetHeader(menu.MessageSo));
-            
+
             _previousMenu = _currentMenu;
             _currentMenu = menu;
 
@@ -95,7 +104,21 @@ namespace CardGame.UI
             _screensParent.DOLocalMove(newPosition, _isEnabled ? 0 : _screenMoveDuration)
                 .SetEase(Ease.InOutQuint)
                 .SetUpdate(true)
-                .OnComplete(() => { _previousMenu.gameObject.SetActive(false); });
+                .OnComplete(() =>
+                {
+                    _previousMenu.gameObject.SetActive(false);
+                    EnableInput(true);
+                });
+        }
+
+        /// <summary>
+        /// Enable or disable input while ui is animating
+        /// </summary>
+        /// <param name="enable"></param>
+        private void EnableInput(bool enable)
+        {
+            _eventSystem.enabled = enable;
+            _inputManager.enabled = enable;
         }
 
         /// <summary>
@@ -133,6 +156,7 @@ namespace CardGame.UI
             _currentMenu.gameObject.SetActive(false);
 
             _currentMenu = _pauseScreen;
+            SetHeader(_pauseScreen.MessageSo);
             _isEnabled = true;
         }
 
@@ -160,6 +184,15 @@ namespace CardGame.UI
             if (_muteToggle) _muteToggle.isOn = gameState.Mute;
             if (_volumeLevel) _volumeLevel.value = gameState.MusicVolume;
             if (_playerNameInput) _playerNameInput.text = gameState.PlayerName;
+        }
+
+        private void OnDisable()
+        {
+            _muteToggle.onValueChanged.RemoveAllListeners();
+            _volumeLevel.onValueChanged.RemoveAllListeners();
+            _saveButton.onClick.RemoveAllListeners();
+            _loadButton.onClick.RemoveAllListeners();
+            _startButton.onClick.RemoveAllListeners();
         }
     }
 }

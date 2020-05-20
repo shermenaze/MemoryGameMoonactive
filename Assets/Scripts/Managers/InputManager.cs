@@ -12,9 +12,7 @@ namespace CardGame
         public void Init(Camera camera)
         {
             _camera = camera;
-            
             name = name.Declone();
-            //enabled = false;
         }
         
         private void Awake() => _inputSystem = new KeyboardInput(_gamePauseEvent);
