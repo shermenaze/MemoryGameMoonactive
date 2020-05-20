@@ -58,12 +58,14 @@ namespace CardGame
         {
             _memoryGameManager = Instantiate(_gameConfig.MemoryGameManager);
             _memoryGameManager.Init(_camera, _hud);
+            _memoryGameManager.name = _memoryGameManager.name.Declone();
         }
 
         private void InitInputManager()
         {
             _inputManager = Instantiate(_gameConfig.InputManager, transform);
             _inputManager.Init(_camera);
+            _inputManager.name = _inputManager.name.Declone();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CardGame.SaveSystem
@@ -51,10 +52,18 @@ namespace CardGame.SaveSystem
         /// </summary>
         public void Save()
         {
-            var gameState = new GameState();
+            try
+            {
+                var gameState = new GameState();
             
-            _saveGameEvent.Raise(gameState);
-            _saveSystem.Save(gameState);
+                _saveGameEvent.Raise(gameState);
+                _saveSystem.Save(gameState);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -62,8 +71,16 @@ namespace CardGame.SaveSystem
         /// </summary>
         public void Load()
         {
-            var gameState = _saveSystem.Load();
-            _loadGameEvent.Raise(gameState);
+            try
+            {
+                var gameState = _saveSystem.Load();
+                _loadGameEvent.Raise(gameState);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }
