@@ -3,7 +3,7 @@ using UnityEngine;
 namespace CardGame.SaveSystem
 {
     [CreateAssetMenu(menuName = "SaveSystems/MemorySaveSystem ", fileName = "MemorySaveSystem")]
-    public class MemorySaveSystem : BaseSaveSystem
+    public class MemorySaveLoadSystem : BaseSaveSystem
     {
         private GameState _gameState;
         

@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CardGame.SaveSystem
 {
     [CreateAssetMenu(menuName = "SaveSystems/PlayerPrefSaveSystem", fileName = "PlayerPrefSaveSystem")]
-    public class PlayerPrefsSaveSystem : BaseSaveSystem
+    public class PlayerPrefsSaveLoadSystem : BaseSaveSystem
     {
         #region String Consts
 

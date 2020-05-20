@@ -79,17 +79,18 @@ namespace CardGame
         public void RotateCard(bool enabledWhenDone, float delay = 0)
         {
             Enabled = false;
+            _isFaceUp = !_isFaceUp;
 
             if(AudioManager.Instance.isActiveAndEnabled)
                 AudioManager.Instance.PlaySound(_cardFlipAudio, 0.3f);
 
+            //transform.Rotate();
             transform.DORotate(_endRotation, 0.4f, RotateMode.LocalAxisAdd).SetEase(Ease.InOutQuint)
                 .SetUpdate(true)
                 .SetDelay(delay)
                 .OnUpdate(SwitchCardSprite)
                 .OnComplete(() =>
                 {
-                    _isFaceUp = !_isFaceUp;
                     Enabled = enabledWhenDone;
                 });
         }

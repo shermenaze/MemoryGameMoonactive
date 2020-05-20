@@ -7,6 +7,7 @@ namespace CardGame.SaveSystem
         public abstract void Save(GameState gameState);
 
         public abstract GameState Load();
+        
         public abstract void DeleteAll();
     }
 }
