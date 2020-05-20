@@ -15,7 +15,7 @@ namespace CardGame
             name = name.Declone();
         }
         
-        private void Awake() => _inputSystem = new KeyboardInput(_gamePauseEvent);
+        private void Awake() => _inputSystem = new KeyboardMouseInput(_gamePauseEvent);
 
         private void Update() => _inputSystem.CheckInput(_camera);
     }

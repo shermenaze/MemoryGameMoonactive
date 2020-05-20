@@ -2,11 +2,11 @@ using UnityEngine;
 
 namespace CardGame
 {
-    public class KeyboardInput : IInput
+    public class KeyboardMouseInput : IInput
     {
         private readonly GameEvent _gamePauseEvent;
 
-        public KeyboardInput(GameEvent gamePauseEvent)
+        public KeyboardMouseInput(GameEvent gamePauseEvent)
         {
             _gamePauseEvent = gamePauseEvent;
         }

@@ -32,8 +32,8 @@ namespace CardGame.UI
         [SerializeField] private Toggle _muteToggle;
         [SerializeField] private TMP_InputField _playerNameInput;
 
-        private UiScreen _currentMenu;
-        private UiScreen _previousMenu;
+        private UiScreen _currentScreen;
+        private UiScreen _previousScreen;
         private SaveLoadManager _saveLoadManager;
         private InputManager _inputManager;
         private Button _currentClickedButton;
@@ -46,7 +46,7 @@ namespace CardGame.UI
         private void Awake()
         {
             SetHeader(_welcomeScreen.MessageSo);
-            _currentMenu = _welcomeScreen;
+            _currentScreen = _welcomeScreen;
             _isEnabled = true;
             ScaleUi();
         }
@@ -77,10 +77,11 @@ namespace CardGame.UI
         /// Sets the UI header text according to the menu type provided
         /// </summary>
         /// <param name="headerMessageSo">Header message object</param>
-        private void SetHeader(HeaderMessageSO headerMessageSo)
+        /// <param name="endvalue">The end value</param>
+        private void SetHeader(HeaderMessageSO headerMessageSo, float endValue = 1)
         {
             _headerText.text = headerMessageSo.Message;
-            _headerText.DOFade(1, _screenMoveDuration * 0.5f).SetUpdate(true);
+            _headerText.DOFade(endValue, _screenMoveDuration * 0.5f).SetUpdate(true);
         }
 
         /// <summary>
@@ -94,8 +95,8 @@ namespace CardGame.UI
             _headerText.DOFade(0, _screenMoveDuration * 0.5f).SetUpdate(true)
                 .OnComplete(() => SetHeader(menu.MessageSo));
 
-            _previousMenu = _currentMenu;
-            _currentMenu = menu;
+            _previousScreen = _currentScreen;
+            _currentScreen = menu;
 
             menu.gameObject.SetActive(true);
 
@@ -106,7 +107,7 @@ namespace CardGame.UI
                 .SetUpdate(true)
                 .OnComplete(() =>
                 {
-                    _previousMenu.gameObject.SetActive(false);
+                    _previousScreen.gameObject.SetActive(false);
                     EnableInput(true);
                 });
         }
@@ -117,8 +118,10 @@ namespace CardGame.UI
         /// <param name="enable"></param>
         private void EnableInput(bool enable)
         {
+            if (_currentScreen != _welcomeScreen && _previousScreen != _welcomeScreen)
+                _inputManager.enabled = enable;
+
             _eventSystem.enabled = enable;
-            _inputManager.enabled = enable;
         }
 
         /// <summary>
@@ -126,7 +129,7 @@ namespace CardGame.UI
         /// </summary>
         public void ShowLastMenu()
         {
-            ShowMenu(_previousMenu);
+            ShowMenu(_previousScreen);
         }
 
         /// <summary>
@@ -138,7 +141,7 @@ namespace CardGame.UI
             {
                 Time.timeScale = 0;
 
-                _currentMenu.gameObject.SetActive(true);
+                _currentScreen.gameObject.SetActive(true);
                 _uiElements.DOScale(Vector3.one, _menuScaleDuration).SetEase(Ease.OutQuint).SetUpdate(true)
                     .OnComplete(() => _isEnabled = false);
             }
@@ -153,10 +156,10 @@ namespace CardGame.UI
         private void ScaleDownMenu()
         {
             _screensParent.localPosition = Vector2.zero;
-            _currentMenu.gameObject.SetActive(false);
+            _currentScreen.gameObject.SetActive(false);
 
-            _currentMenu = _pauseScreen;
-            SetHeader(_pauseScreen.MessageSo);
+            _currentScreen = _pauseScreen;
+            SetHeader(_pauseScreen.MessageSo, 0);
             _isEnabled = true;
         }
 
