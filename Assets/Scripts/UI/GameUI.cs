@@ -10,48 +10,46 @@ namespace CardGame.UI
     {
         #region Fields
 
-        [Header("Screens")] [SerializeField] private RectTransform _uiElements;
+        [Header("Screens")] 
+        [SerializeField] private RectTransform _uiElements;
         [SerializeField] private RectTransform _screensParent;
-        [SerializeField] private RectTransform _welcomeMenu;
-        [SerializeField] private RectTransform _pauseMenu;
+        [SerializeField] private UiScreen _welcomeScreen;
+        [SerializeField] private UiScreen _pauseScreen;
 
-        [Header("Animations")] [SerializeField] [Range(0, 2)]
-        private int _screenMoveDuration = 1;
-
-        [SerializeField] [Range(0, 2)] private float _menuScaleDuration = 0.4f;
+        [Header("Animations")]
         [SerializeField] private TextMeshProUGUI _headerText;
-        [SerializeField] private HeaderMessageSO _welcomeHeaderMessageSo;
+        [SerializeField] [Range(0, 2)] private int _screenMoveDuration = 1;
+        [SerializeField] [Range(0, 2)] private float _menuScaleDuration = 0.4f;
 
         [Header("Buttons")] [SerializeField] private Button _startButton;
         [SerializeField] private Button _saveButton;
         [SerializeField] private Button _loadButton;
 
-        [Header("Loadable Elements")] [SerializeField]
-        private Slider _volumeLevel;
-
+        [Header("Loadable Elements")]
+        [SerializeField] private Slider _volumeLevel;
         [SerializeField] private Toggle _muteToggle;
         [SerializeField] private TMP_InputField _playerNameInput;
 
-        private RectTransform _currentMenu;
-        private RectTransform _previousMenu;
-        private string _lastMessage;
-        private bool _isEnabled;
+        private UiScreen _currentMenu;
+        private UiScreen _previousMenu;
         private SaveLoadManager _saveLoadManager;
+        private InputManager _inputManager;
+        private bool _isEnabled;
 
         #endregion
 
         private void Awake()
         {
-            SetHeader(_welcomeHeaderMessageSo);
-            _lastMessage = _welcomeHeaderMessageSo.Message;
-            _currentMenu = _welcomeMenu;
+            SetHeader(_welcomeScreen.MessageSo);
+            _currentMenu = _welcomeScreen;
             _isEnabled = true;
             ScaleUi();
         }
 
-        public void Init(SaveLoadManager saveLoadManager)
+        public void Init(SaveLoadManager saveLoadManager, InputManager inputManager)
         {
             _saveLoadManager = saveLoadManager;
+            _inputManager = inputManager;
             AddListeners();
         }
 
@@ -65,6 +63,7 @@ namespace CardGame.UI
 
             _saveButton.onClick.AddListener(_saveLoadManager.Save);
             _loadButton.onClick.AddListener(_saveLoadManager.Load);
+            _startButton.onClick.AddListener(() => _inputManager.enabled = true);
         }
 
         /// <summary>
@@ -74,29 +73,29 @@ namespace CardGame.UI
         public void SetHeader(HeaderMessageSO headerMessageSo)
         {
             _headerText.text = headerMessageSo.Message;
+            _headerText.DOFade(1, _screenMoveDuration * 0.5f).SetUpdate(true);
         }
 
         /// <summary>
         /// Enables the incoming menu parameter, and animate it into view 
         /// </summary>
         /// <param name="menu">The menu to show</param>
-        public void ShowMenu(RectTransform menu)
+        public void ShowMenu(UiScreen menu)
         {
-            //if (_previousMenu == _currentMenu) return;
+            _headerText.DOFade(0, _screenMoveDuration * 0.5f).SetUpdate(true)
+                .OnComplete(() => SetHeader(menu.MessageSo));
+            
             _previousMenu = _currentMenu;
+            _currentMenu = menu;
 
             menu.gameObject.SetActive(true);
-            
+
             var newPosition = _screensParent.localPosition.y > 0 ? Vector2.zero : new Vector2(0, 1080);
 
             _screensParent.DOLocalMove(newPosition, _isEnabled ? 0 : _screenMoveDuration)
                 .SetEase(Ease.InOutQuint)
                 .SetUpdate(true)
-                .OnComplete(() =>
-                {
-                    _currentMenu.gameObject.SetActive(false);
-                    _currentMenu = menu;
-                });
+                .OnComplete(() => { _previousMenu.gameObject.SetActive(false); });
         }
 
         /// <summary>
@@ -105,7 +104,6 @@ namespace CardGame.UI
         public void ShowLastMenu()
         {
             ShowMenu(_previousMenu);
-            _lastMessage = _headerText.text;
         }
 
         /// <summary>
@@ -118,23 +116,24 @@ namespace CardGame.UI
                 Time.timeScale = 0;
 
                 _currentMenu.gameObject.SetActive(true);
-                _uiElements.DOScale(Vector3.one, _menuScaleDuration).SetEase(Ease.OutQuint).SetUpdate(true);
-
-                _isEnabled = false;
+                _uiElements.DOScale(Vector3.one, _menuScaleDuration).SetEase(Ease.OutQuint).SetUpdate(true)
+                    .OnComplete(() => _isEnabled = false);
             }
             else
             {
                 Time.timeScale = 1;
-                _uiElements.DOScale(Vector3.zero, _menuScaleDuration).SetEase(Ease.InQuint)
-                    .OnComplete(() =>
-                    {
-                        _screensParent.localPosition = Vector2.zero;
-                        _currentMenu.gameObject.SetActive(false);
-                        _currentMenu = _pauseMenu;
-                    });
-
-                _isEnabled = true;
+                _uiElements.DOScale(Vector3.zero, _menuScaleDuration)
+                    .SetEase(Ease.InQuint).OnComplete(ScaleDownMenu);
             }
+        }
+
+        private void ScaleDownMenu()
+        {
+            _screensParent.localPosition = Vector2.zero;
+            _currentMenu.gameObject.SetActive(false);
+
+            _currentMenu = _pauseScreen;
+            _isEnabled = true;
         }
 
         /// <summary>

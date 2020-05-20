@@ -47,7 +47,7 @@ namespace CardGame
             _canvasHolder.name = _canvasHolder.name.Declone(); 
             
             var gameUi = Instantiate(_gameConfig.GameUi, _canvasHolder.transform);
-            gameUi.Init(_saveLoadManager);
+            gameUi.Init(_saveLoadManager, _inputManager);
             gameUi.name = gameUi.name.Declone(); 
             
             _hud = Instantiate(_gameConfig.Hud, _canvasHolder.transform);

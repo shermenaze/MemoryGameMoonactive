@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7633251676486549176}
   - component: {fileID: 7633251676486549159}
+  - component: {fileID: 3179560047740024426}
   m_Layer: 5
   m_Name: Pause_Screen
   m_TagString: Untagged
@@ -50,6 +51,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7633251676486549177}
   m_CullTransparentMesh: 0
+--- !u!114 &3179560047740024426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633251676486549177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feabab225964dbca12a10eea4ec799e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: {fileID: 11400000, guid: 1899f18ad33c1334f942ceee619657d1, type: 2}
 --- !u!1 &7633251676526081244
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,14 +830,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiElements: {fileID: 7633251678189437811}
   _screensParent: {fileID: 7633251676526081243}
-  _welcomeMenu: {fileID: 7633251677559809829}
-  _pauseMenu: {fileID: 7633251676486549176}
+  _welcomeScreen: {fileID: 7638224258619257488}
+  _pauseScreen: {fileID: 3179560047740024426}
+  _headerText: {fileID: 7633251676879693187}
   _screenMoveDuration: 1
   _menuScaleDuration: 0.4
-  _headerText: {fileID: 7633251676879693187}
-  _welcomeHeaderMessageSo: {fileID: 11400000, guid: b1060e251413f764083c5b6bcdb84fc3,
-    type: 2}
-  _startButton: {fileID: 0}
+  _headerAnimationDuration: 0.5
+  _startButton: {fileID: 7633251677461422773}
   _saveButton: {fileID: 7633251676841497159}
   _loadButton: {fileID: 7633251677187613337}
   _volumeLevel: {fileID: 7633251677871321764}
@@ -890,8 +903,8 @@ MonoBehaviour:
         m_MethodName: ShowMenu
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 7633251677768289929}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
+          m_ObjectArgument: {fileID: 1137240465836335814}
+          m_ObjectArgumentAssemblyTypeName: CardGame.UI.UiScreen, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -903,18 +916,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7633251676825038903}
-        m_MethodName: SetHeader
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 3944247e3b66c0848aa631254f43399b,
-            type: 2}
-          m_ObjectArgumentAssemblyTypeName: CardGame.HeaderMessageSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -941,8 +942,8 @@ MonoBehaviour:
         m_MethodName: ShowMenu
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 7633251677514093074}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
+          m_ObjectArgument: {fileID: 6868556731542181479}
+          m_ObjectArgumentAssemblyTypeName: CardGame.UI.UiScreen, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -954,18 +955,6 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7633251676825038903}
-        m_MethodName: SetHeader
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 6c04089908c5d394ba5bc33aae15155f,
-            type: 2}
-          m_ObjectArgumentAssemblyTypeName: CardGame.HeaderMessageSO, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2029,18 +2018,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7633251676825038903}
-        m_MethodName: SetHeader
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 1899f18ad33c1334f942ceee619657d1,
-            type: 2}
-          m_ObjectArgumentAssemblyTypeName: CardGame.HeaderMessageSO, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &7633251677107379807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2647,6 +2624,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7633251677276609858}
   - component: {fileID: 7633251677276609857}
+  - component: {fileID: 1006346062813665577}
   m_Layer: 5
   m_Name: Settings_Screen
   m_TagString: Untagged
@@ -2692,6 +2670,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7633251677276609859}
   m_CullTransparentMesh: 0
+--- !u!114 &1006346062813665577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633251677276609859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feabab225964dbca12a10eea4ec799e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: {fileID: 11400000, guid: 5e82a3badee08cc49ba5467dfd76bff1, type: 2}
 --- !u!1 &7633251677292585162
 GameObject:
   m_ObjectHideFlags: 0
@@ -3671,6 +3662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7633251677514093074}
   - component: {fileID: 7633251677514093073}
+  - component: {fileID: 6868556731542181479}
   m_Layer: 5
   m_Name: Win_Screen
   m_TagString: Untagged
@@ -3706,6 +3698,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7633251677514093075}
   m_CullTransparentMesh: 0
+--- !u!114 &6868556731542181479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633251677514093075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feabab225964dbca12a10eea4ec799e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: {fileID: 11400000, guid: 6c04089908c5d394ba5bc33aae15155f, type: 2}
 --- !u!1 &7633251677559809830
 GameObject:
   m_ObjectHideFlags: 0
@@ -3716,6 +3721,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7633251677559809829}
   - component: {fileID: 7633251677559809828}
+  - component: {fileID: 7638224258619257488}
   m_Layer: 5
   m_Name: Welcome_Screen
   m_TagString: Untagged
@@ -3754,6 +3760,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7633251677559809830}
   m_CullTransparentMesh: 0
+--- !u!114 &7638224258619257488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633251677559809830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feabab225964dbca12a10eea4ec799e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: {fileID: 11400000, guid: b1060e251413f764083c5b6bcdb84fc3, type: 2}
 --- !u!1 &7633251677595563364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4267,20 +4286,8 @@ MonoBehaviour:
         m_MethodName: ShowMenu
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 7633251677276609858}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7633251676825038903}
-        m_MethodName: SetHeader
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 5e82a3badee08cc49ba5467dfd76bff1,
-            type: 2}
-          m_ObjectArgumentAssemblyTypeName: CardGame.HeaderMessageSO, Assembly-CSharp
+          m_ObjectArgument: {fileID: 1006346062813665577}
+          m_ObjectArgumentAssemblyTypeName: CardGame.UI.UiScreen, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4369,6 +4376,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7633251677768289929}
   - component: {fileID: 7633251677768289928}
+  - component: {fileID: 1137240465836335814}
   m_Layer: 5
   m_Name: Lose_Screen
   m_TagString: Untagged
@@ -4404,6 +4412,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7633251677768289930}
   m_CullTransparentMesh: 0
+--- !u!114 &1137240465836335814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7633251677768289930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feabab225964dbca12a10eea4ec799e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _message: {fileID: 11400000, guid: 3944247e3b66c0848aa631254f43399b, type: 2}
 --- !u!1 &7633251677800364361
 GameObject:
   m_ObjectHideFlags: 0
@@ -4527,20 +4548,8 @@ MonoBehaviour:
         m_MethodName: ShowMenu
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 7633251677276609858}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.RectTransform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7633251676825038903}
-        m_MethodName: SetHeader
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 5e82a3badee08cc49ba5467dfd76bff1,
-            type: 2}
-          m_ObjectArgumentAssemblyTypeName: CardGame.HeaderMessageSO, Assembly-CSharp
+          m_ObjectArgument: {fileID: 1006346062813665577}
+          m_ObjectArgumentAssemblyTypeName: CardGame.UI.UiScreen, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
