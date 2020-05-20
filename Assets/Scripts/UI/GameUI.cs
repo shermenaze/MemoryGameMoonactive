@@ -158,6 +158,7 @@ namespace CardGame.UI
             _screensParent.localPosition = Vector2.zero;
             _currentScreen.gameObject.SetActive(false);
 
+            
             _currentScreen = _pauseScreen;
             SetHeader(_pauseScreen.MessageSo, 0);
             _isEnabled = true;
